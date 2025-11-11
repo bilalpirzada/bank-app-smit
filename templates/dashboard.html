@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Banking App{% endblock %}
+
+{% block content %}
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h2>👤 {{ account.name }}</h2>
+        <a href="{{ url_for('logout') }}" class="btn btn-secondary">Logout</a>
+    </div>
+    
+    <div style="background: #e9ecef; padding: 10px 15px; border-radius: 8px; margin-bottom: 20px;">
+        Account #{{ account.number }}
+    </div>
+    
+    <div class="balance-card">
+        <div style="color: #666; margin-bottom: 10px;">Current Balance</div>
+        <div class="balance-amount">PKR {{ "%.2f"|format(account.balance) }}</div>
+    </div>
+    
+    <!-- Deposit Section -->
+    <div class="action-section">
+        <h3 style="margin-bottom: 15px;">💵 Deposit Money</h3>
+        <form method="POST" action="{{ url_for('deposit') }}" style="display: flex; gap: 10px;">
+            <input type="number" name="amount" step="0.01" min="0.01" placeholder="Amount" required style="flex: 1;">
+            <button type="submit">Deposit</button>
+        </form>
+    </div>
+    
+    <!-- Withdraw Section -->
+    <div class="action-section">
+        <h3 style="margin-bottom: 15px;">💸 Withdraw Money</h3>
+        <form method="POST" action="{{ url_for('withdraw') }}" style="display: flex; gap: 10px;">
+            <input type="number" name="amount" step="0.01" min="0.01" placeholder="Amount" required style="flex: 1;">
+            <button type="submit">Withdraw</button>
+        </form>
+    </div>
+    
+    <!-- Transfer Section -->
+    <div class="action-section">
+        <h3 style="margin-bottom: 15px;">💳 Transfer Money</h3>
+        <form method="POST" action="{{ url_for('transfer') }}">
+            <div class="form-group">
+                <input type="number" name="receiver_account" placeholder="Receiver Account Number" required>
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <input type="number" name="amount" step="0.01" min="0.01" placeholder="Amount" required style="flex: 1;">
+                <button type="submit">Transfer</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
